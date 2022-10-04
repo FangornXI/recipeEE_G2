@@ -33,6 +33,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "userByAuthorId")
     private Collection<RecipeEntity> recipesById;
 
+
     public int getId() {
         return id;
     }
