@@ -7,8 +7,6 @@ public interface ObjectDAO<T> {
 
     List<T> findAll();
 
-    List<T> findByCountry(long idParam);
-
     boolean create(T object);
 
     Optional<T> findById(long idParam);
