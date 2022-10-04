@@ -46,7 +46,7 @@ public class JpaUserDAO implements ObjectDAO<UserEntity> {
     }
 
     @Override
-    public Optional<UserEntity> findById(long idParam) {
+    public Optional<UserEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
         try{
             UserEntity object = em.find(UserEntity.class,idParam);
@@ -60,7 +60,7 @@ public class JpaUserDAO implements ObjectDAO<UserEntity> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(int id) {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
 
