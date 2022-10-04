@@ -33,6 +33,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "userByAuthorId")
     private Collection<RecipeEntity> recipesById;
 
+
     public UserEntity(int id, String lastname, String firstname, String email, String photoUrl, String password, Collection<CommentEntity> commentsById, Collection<CookedRecipeEntity> cookedRecipesById, Collection<RecipeEntity> recipesById) {
         this.id = id;
         this.lastname = lastname;
