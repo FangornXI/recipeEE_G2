@@ -3,6 +3,9 @@ package com.example.recipeee_g2.dao;
 import com.example.recipeee_g2.entity.UserEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +61,26 @@ public class JpaUserDAO implements ObjectDAO<UserEntity> {
         }
         return Optional.empty();
     }
+    @Override
+    public List<UserEntity>  findByField(String paramName ,String param) {
+        List<UserEntity> objectList = new ArrayList<>();
 
+        EntityManager em = EMFManager.getEMF().createEntityManager();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        try{
+            CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
+            Root<UserEntity> i = query.from(UserEntity.class);
+            query.select(i);
+            query.where(builder.lessThanOrEqualTo(i.get(paramName).as(String.class), param));
+            objectList = em.createQuery(query).getResultList();;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            em.close();
+        }
+
+        return objectList;
+    }
     @Override
     public boolean delete(int id) {
 

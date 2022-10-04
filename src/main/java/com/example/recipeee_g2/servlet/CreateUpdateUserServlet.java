@@ -16,14 +16,29 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
-@WebServlet("/addUser")
-public class AddUserServlet extends HttpServlet {
+@WebServlet({"/user/Create","/user/Update"})
+public class CreateUpdateUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("/WEB-INF/addUserForm.jsp").forward(req,resp);
+        if (req.getSession().getAttribute("user") == null){
+            req.setAttribute("user", null);
+            req.setAttribute("type", "Create");
+            req.getRequestDispatcher("/WEB-INF/createUpdateUserForm.jsp").forward(req,resp);
+        }else{
+            String idStr = req.getSession().getAttribute("user").toString();
+            Optional<UserEntity> user = DaoFactory.getUserDAO().findById(Integer.parseInt(idStr));
+            if (user.isPresent()) {
+                req.setAttribute("user", user.get());
+                req.setAttribute("type", "Update");
+                req.getRequestDispatcher("/WEB-INF/createUpdateUserForm.jsp").forward(req,resp);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/homepage");
+            }
+        }
 
     }
 
@@ -34,7 +49,7 @@ public class AddUserServlet extends HttpServlet {
         String photoUrl = req.getParameter("photoUrl");
         String emailAddress = req.getParameter("emailAddress");
         String password = req.getParameter("password");
-
+        String type = req.getParameter("type");
 
         String generatedPassword = null;
         try
@@ -59,17 +74,20 @@ public class AddUserServlet extends HttpServlet {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        System.out.println(generatedPassword);
 
-        Collection<CommentEntity> commentsById = new ArrayList<>();
-        Collection<CookedRecipeEntity > cookedRecipesById = new ArrayList<>();
-        Collection< RecipeEntity > recipesById = new ArrayList<>();
+        if (type.equals("Update")){
+            int id = Integer.parseInt(req.getSession().getAttribute("user").toString());
+            if (password.equals("")) {
+                generatedPassword =  DaoFactory.getUserDAO().findById(id).get().getPassword();
+            }
+            DaoFactory.getUserDAO().edit(new UserEntity(id, lastname, firstName, emailAddress, photoUrl, generatedPassword, null, null,null));
+        }else{
+            if(DaoFactory.getUserDAO().findByField("email",emailAddress).isEmpty()){
+                DaoFactory.getUserDAO().create(new UserEntity(lastname, firstName, emailAddress, photoUrl, generatedPassword, null, null,null));
+            }
+        }
 
-        UserEntity newUser = new UserEntity(lastname, firstName, emailAddress, photoUrl, generatedPassword, commentsById, cookedRecipesById, recipesById);
-
-        DaoFactory.getUserDAO().create(newUser);
-
-        resp.sendRedirect(req.getContextPath() + "/login");
+        resp.sendRedirect(req.getContextPath() + "/homepage");
 
     }
 }

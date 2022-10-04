@@ -1,14 +1,38 @@
 package com.example.recipeee_g2.dao;
 
 import com.example.recipeee_g2.entity.RecipeEntity;
+import com.example.recipeee_g2.entity.RecipeIngredientEntity;
+import com.example.recipeee_g2.entity.StepEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class JpaRecipeDAO implements ObjectDAO<RecipeEntity> {
+    @Override
+    public List<RecipeEntity>  findByField(String paramName , String param) {
+        List<RecipeEntity> objectList = new ArrayList<>();
+
+        EntityManager em = EMFManager.getEMF().createEntityManager();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        try{
+            CriteriaQuery<RecipeEntity> query = builder.createQuery(RecipeEntity.class);
+            Root<RecipeEntity> i = query.from(RecipeEntity.class);
+            query.select(i);
+            query.where(builder.lessThanOrEqualTo(i.get(paramName).as(String.class), param));
+            objectList = em.createQuery(query).getResultList();;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            em.close();
+        }
+        return objectList;
+    }
     @Override
     public List<RecipeEntity> findAll() {
         List<RecipeEntity> objectList = new ArrayList<>();
