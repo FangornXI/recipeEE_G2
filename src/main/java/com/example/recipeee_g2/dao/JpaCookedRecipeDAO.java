@@ -46,7 +46,7 @@ public class JpaCookedRecipeDAO implements ObjectDAO<CookedRecipeEntity> {
     }
 
     @Override
-    public Optional<CookedRecipeEntity> findById(long idParam) {
+    public Optional<CookedRecipeEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
         try{
             CookedRecipeEntity object = em.find(CookedRecipeEntity.class,idParam);
@@ -60,7 +60,7 @@ public class JpaCookedRecipeDAO implements ObjectDAO<CookedRecipeEntity> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(int id) {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
 

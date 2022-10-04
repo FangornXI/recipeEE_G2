@@ -9,9 +9,9 @@ public interface ObjectDAO<T> {
 
     boolean create(T object);
 
-    Optional<T> findById(long idParam);
+    Optional<T> findById(int idParam);
 
-    boolean delete(long id);
+    boolean delete(int id);
 
     boolean edit(T object);
 }

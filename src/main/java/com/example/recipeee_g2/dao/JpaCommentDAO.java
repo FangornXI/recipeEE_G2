@@ -46,7 +46,7 @@ public class JpaCommentDAO implements ObjectDAO<CommentEntity> {
     }
 
     @Override
-    public Optional<CommentEntity> findById(long idParam) {
+    public Optional<CommentEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
         try{
             CommentEntity object = em.find(CommentEntity.class,idParam);
@@ -60,7 +60,7 @@ public class JpaCommentDAO implements ObjectDAO<CommentEntity> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(int id) {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
 

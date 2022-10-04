@@ -46,7 +46,7 @@ public class JpaIngredientDAO implements ObjectDAO<IngredientEntity> {
     }
 
     @Override
-    public Optional<IngredientEntity> findById(long idParam) {
+    public Optional<IngredientEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
         try{
             IngredientEntity object = em.find(IngredientEntity.class,idParam);
@@ -60,7 +60,7 @@ public class JpaIngredientDAO implements ObjectDAO<IngredientEntity> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(int id) {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
 

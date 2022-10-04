@@ -46,7 +46,7 @@ public class JpaStepDAO implements ObjectDAO<StepEntity> {
     }
 
     @Override
-    public Optional<StepEntity> findById(long idParam) {
+    public Optional<StepEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
         try{
             StepEntity object = em.find(StepEntity.class,idParam);
@@ -60,7 +60,7 @@ public class JpaStepDAO implements ObjectDAO<StepEntity> {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(int id) {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
 
