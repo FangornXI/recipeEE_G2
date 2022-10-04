@@ -28,7 +28,6 @@ public class AddUserServlet extends HttpServlet {
         String emailAddress = req.getParameter("emailAddress");
         String password = req.getParameter("password");
 
-        UserEntity newUser = new UserEntity(lastname, firstName, emailAddress,password,password);
 
         DaoFactory.getUserDAO().create(new UserEntity());
 

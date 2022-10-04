@@ -3,7 +3,7 @@ package com.example.recipeee_g2.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "comment", schema = "recipe", catalog = "")
+@Table(name = "comment", schema = "recipe")
 public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -18,18 +18,32 @@ public class CommentEntity {
     @Basic
     @Column(name = "note")
     private String note;
-    @Basic
-    @Column(name = "user_id")
-    private int userId;
-    @Basic
-    @Column(name = "recipe_id")
-    private int recipeId;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userByUserId;
     @ManyToOne
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", nullable = false)
     private RecipeEntity recipeByRecipeId;
+
+    public CommentEntity(int id, String textComment, Integer rating, String note, UserEntity userByUserId, RecipeEntity recipeByRecipeId) {
+        this.id = id;
+        this.textComment = textComment;
+        this.rating = rating;
+        this.note = note;
+        this.userByUserId = userByUserId;
+        this.recipeByRecipeId = recipeByRecipeId;
+    }
+
+    public CommentEntity(String textComment, Integer rating, String note, UserEntity userByUserId, RecipeEntity recipeByRecipeId) {
+        this.textComment = textComment;
+        this.rating = rating;
+        this.note = note;
+        this.userByUserId = userByUserId;
+        this.recipeByRecipeId = recipeByRecipeId;
+    }
+
+    public CommentEntity() {
+    }
 
     public int getId() {
         return id;
@@ -61,50 +75,6 @@ public class CommentEntity {
 
     public void setNote(String note) {
         this.note = note;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getRecipeId() {
-        return recipeId;
-    }
-
-    public void setRecipeId(int recipeId) {
-        this.recipeId = recipeId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CommentEntity that = (CommentEntity) o;
-
-        if (id != that.id) return false;
-        if (userId != that.userId) return false;
-        if (recipeId != that.recipeId) return false;
-        if (textComment != null ? !textComment.equals(that.textComment) : that.textComment != null) return false;
-        if (rating != null ? !rating.equals(that.rating) : that.rating != null) return false;
-        if (note != null ? !note.equals(that.note) : that.note != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (textComment != null ? textComment.hashCode() : 0);
-        result = 31 * result + (rating != null ? rating.hashCode() : 0);
-        result = 31 * result + (note != null ? note.hashCode() : 0);
-        result = 31 * result + userId;
-        result = 31 * result + recipeId;
-        return result;
     }
 
     public UserEntity getUserByUserId() {

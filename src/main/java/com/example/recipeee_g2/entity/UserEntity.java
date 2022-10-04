@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "user", schema = "recipe", catalog = "")
+@Table(name = "user", schema = "recipe")
 public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -33,6 +33,32 @@ public class UserEntity {
     @OneToMany(mappedBy = "userByAuthorId")
     private Collection<RecipeEntity> recipesById;
 
+
+    public UserEntity(int id, String lastname, String firstname, String email, String photoUrl, String password, Collection<CommentEntity> commentsById, Collection<CookedRecipeEntity> cookedRecipesById, Collection<RecipeEntity> recipesById) {
+        this.id = id;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.email = email;
+        this.photoUrl = photoUrl;
+        this.password = password;
+        this.commentsById = commentsById;
+        this.cookedRecipesById = cookedRecipesById;
+        this.recipesById = recipesById;
+    }
+
+    public UserEntity(String lastname, String firstname, String email, String photoUrl, String password, Collection<CommentEntity> commentsById, Collection<CookedRecipeEntity> cookedRecipesById, Collection<RecipeEntity> recipesById) {
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.email = email;
+        this.photoUrl = photoUrl;
+        this.password = password;
+        this.commentsById = commentsById;
+        this.cookedRecipesById = cookedRecipesById;
+        this.recipesById = recipesById;
+    }
+
+    public UserEntity() {
+    }
 
     public int getId() {
         return id;
@@ -80,34 +106,6 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserEntity that = (UserEntity) o;
-
-        if (id != that.id) return false;
-        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (photoUrl != null ? !photoUrl.equals(that.photoUrl) : that.photoUrl != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (photoUrl != null ? photoUrl.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        return result;
     }
 
     public Collection<CommentEntity> getCommentsById() {
