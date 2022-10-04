@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "recipe", schema = "recipe", catalog = "")
+@Table(name = "recipe", schema = "recipe")
 public class RecipeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -38,9 +38,6 @@ public class RecipeEntity {
     @Basic
     @Column(name = "cook_time")
     private int cookTime;
-    @Basic
-    @Column(name = "author_id")
-    private Integer authorId;
     @OneToMany(mappedBy = "recipeByRecipeId")
     private Collection<CommentEntity> commentsById;
     @OneToMany(mappedBy = "recipeByRecipeId")
@@ -52,6 +49,44 @@ public class RecipeEntity {
     private Collection<RecipeIngredientEntity> recipeIngredientsById;
     @OneToMany(mappedBy = "recipeByRecipeId")
     private Collection<StepEntity> stepsById;
+
+    public RecipeEntity(int id, String name, String type, String description, String photoUrl, String dificulty, String price, int prepTime, int restTime, int cookTime, Collection<CommentEntity> commentsById, Collection<CookedRecipeEntity> cookedRecipesById, UserEntity userByAuthorId, Collection<RecipeIngredientEntity> recipeIngredientsById, Collection<StepEntity> stepsById) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.photoUrl = photoUrl;
+        this.dificulty = dificulty;
+        this.price = price;
+        this.prepTime = prepTime;
+        this.restTime = restTime;
+        this.cookTime = cookTime;
+        this.commentsById = commentsById;
+        this.cookedRecipesById = cookedRecipesById;
+        this.userByAuthorId = userByAuthorId;
+        this.recipeIngredientsById = recipeIngredientsById;
+        this.stepsById = stepsById;
+    }
+
+    public RecipeEntity(String name, String type, String description, String photoUrl, String dificulty, String price, int prepTime, int restTime, int cookTime, Collection<CommentEntity> commentsById, Collection<CookedRecipeEntity> cookedRecipesById, UserEntity userByAuthorId, Collection<RecipeIngredientEntity> recipeIngredientsById, Collection<StepEntity> stepsById) {
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.photoUrl = photoUrl;
+        this.dificulty = dificulty;
+        this.price = price;
+        this.prepTime = prepTime;
+        this.restTime = restTime;
+        this.cookTime = cookTime;
+        this.commentsById = commentsById;
+        this.cookedRecipesById = cookedRecipesById;
+        this.userByAuthorId = userByAuthorId;
+        this.recipeIngredientsById = recipeIngredientsById;
+        this.stepsById = stepsById;
+    }
+
+    public RecipeEntity() {
+    }
 
     public int getId() {
         return id;
@@ -131,52 +166,6 @@ public class RecipeEntity {
 
     public void setCookTime(int cookTime) {
         this.cookTime = cookTime;
-    }
-
-    public Integer getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RecipeEntity that = (RecipeEntity) o;
-
-        if (id != that.id) return false;
-        if (prepTime != that.prepTime) return false;
-        if (restTime != that.restTime) return false;
-        if (cookTime != that.cookTime) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (photoUrl != null ? !photoUrl.equals(that.photoUrl) : that.photoUrl != null) return false;
-        if (dificulty != null ? !dificulty.equals(that.dificulty) : that.dificulty != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (photoUrl != null ? photoUrl.hashCode() : 0);
-        result = 31 * result + (dificulty != null ? dificulty.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + prepTime;
-        result = 31 * result + restTime;
-        result = 31 * result + cookTime;
-        result = 31 * result + (authorId != null ? authorId.hashCode() : 0);
-        return result;
     }
 
     public Collection<CommentEntity> getCommentsById() {

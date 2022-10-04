@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "ingredient", schema = "recipe", catalog = "")
+@Table(name = "ingredient", schema = "recipe")
 public class IngredientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -19,6 +19,22 @@ public class IngredientEntity {
     private String photoUrl;
     @OneToMany(mappedBy = "ingredientByIngId")
     private Collection<RecipeIngredientEntity> recipeIngredientsById;
+
+    public IngredientEntity(int id, String name, String photoUrl, Collection<RecipeIngredientEntity> recipeIngredientsById) {
+        this.id = id;
+        this.name = name;
+        this.photoUrl = photoUrl;
+        this.recipeIngredientsById = recipeIngredientsById;
+    }
+
+    public IngredientEntity(String name, String photoUrl, Collection<RecipeIngredientEntity> recipeIngredientsById) {
+        this.name = name;
+        this.photoUrl = photoUrl;
+        this.recipeIngredientsById = recipeIngredientsById;
+    }
+
+    public IngredientEntity() {
+    }
 
     public int getId() {
         return id;
@@ -42,28 +58,6 @@ public class IngredientEntity {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        IngredientEntity that = (IngredientEntity) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (photoUrl != null ? !photoUrl.equals(that.photoUrl) : that.photoUrl != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (photoUrl != null ? photoUrl.hashCode() : 0);
-        return result;
     }
 
     public Collection<RecipeIngredientEntity> getRecipeIngredientsById() {
