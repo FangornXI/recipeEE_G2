@@ -4,21 +4,25 @@
 <header>
     <jsp:include page="_navbar.jsp"/>
 </header>
-<c:if test="${recipe} != null">
 
+    <div class="container">
+        <div class="row justify-content-center">
+            <c:if test="${recipes != null}">
+            <c:forEach items="${recipes}" var="recipe">
+                <div class="card col-3 p-0 m-1">
+                    <img src="${recipe.photoUrl}" class="card-img-top w-100" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${recipe.name}</h5>
+                        <p class="card-text">${recipe.description}</p>
+                        <a href="#" class="btn btn-primary">View</a>
+                    </div>
+                </div>
 
-<c:forEach items="recipes" var="recipe">
-    <div class="card" style="width: 18rem;">
-        <img src="${recipe.photoUrl}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">${recipe.name}</h5>
-            <p class="card-text">${recipe.description}</p>
-            <a href="#" class="btn btn-primary">View</a>
+            </c:forEach>
+            </c:if>
         </div>
     </div>
 
-</c:forEach>
-</c:if>
 
 </body>
 </html>
