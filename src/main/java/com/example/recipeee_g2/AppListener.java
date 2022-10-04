@@ -1,6 +1,6 @@
 package com.example.recipeee_g2;
 
-import com.example.demo.dao.EMFManager;
+import com.example.recipeee_g2.dao.EMFManager;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
