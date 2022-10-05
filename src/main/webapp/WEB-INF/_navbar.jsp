@@ -10,32 +10,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/homepage">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Se connecter</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/addUser">S'inscrire</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Se d&eacute;connecter</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Ajouter une recette</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Recette al&eacute;atoire</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Edit profil</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"></a>Liste recettes deja cuisin&eacute;es</li>
-                        <li><a class="dropdown-item" href="#">tarte aux pommes</a></li>
-                    </ul>
-                </li>
                 <c:if test = "${sessionScope.user == null}" var="condition">
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/user/Create">S'inscrire</a>
@@ -63,11 +37,6 @@
                     </li>
                 </c:if>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Recherche par mot clé" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            
         </div>
     </div>
 </nav>
