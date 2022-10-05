@@ -53,12 +53,14 @@ public class LoginServlet extends HttpServlet {
 
         List<UserEntity> listUser= DaoFactory.getUserDAO().findByField("email",email);
         if (listUser.isEmpty()) {
-            resp.sendRedirect(req.getContextPath() + "/login");
+            req.setAttribute("message", "Unknown login, please try again");
+            req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
         } else if (listUser.get(0).getPassword().equals(generatedPassword)) {
             req.getSession().setAttribute("user",listUser.get(0).getId());
             resp.sendRedirect(req.getContextPath() + "/homepage");
         }else{
-            resp.sendRedirect(req.getContextPath() + "/login");
+            req.setAttribute("message", "Unknown password, please try again");
+            req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
         }
         System.out.println(listUser);
     }
