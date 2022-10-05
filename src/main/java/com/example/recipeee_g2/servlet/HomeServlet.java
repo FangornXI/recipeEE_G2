@@ -17,8 +17,21 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<RecipeEntity> recipes = DaoFactory.getRecipeDAO().findAll();
-        req.setAttribute("recipes", recipes);
+        try {
+            List<RecipeEntity> recipes = DaoFactory.getRecipeDAO().findAll();
+
+            recipes.forEach(recipeEntity -> System.out.println(recipeEntity.getName()));
+            req.setAttribute("recipes", recipes);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         req.getRequestDispatcher("WEB-INF/home.jsp").forward(req, resp);
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
     }
 }

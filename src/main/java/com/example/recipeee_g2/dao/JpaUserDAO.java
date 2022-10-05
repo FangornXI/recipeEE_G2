@@ -40,6 +40,7 @@ public class JpaUserDAO implements ObjectDAO<UserEntity> {
             et.commit();
             return true;
         } catch (RuntimeException re) {
+            re.printStackTrace();
             if (et.isActive())
                 et.rollback();
         }finally {
