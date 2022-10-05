@@ -1,7 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <img src="https://sauvageboris.fr/training/javaee/recipeEE/resources/logo/100.png" alt="logo">
+        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/homepage">
+            <img src="https://sauvageboris.fr/training/javaee/recipeEE/resources/logo/100.png" alt="logo">
+        </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,7 +23,7 @@
                 </c:if>
                 <c:if test="${!condition}">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Ajouter une recette</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/recipe/create?author=${sessionScope.user}">Ajouter une recette</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/reciperand">Recette al&eacute;atoire</a>

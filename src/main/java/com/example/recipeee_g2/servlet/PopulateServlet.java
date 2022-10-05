@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,13 +40,61 @@ public class PopulateServlet extends HttpServlet {
 
     }};
 
+    private static List<IngredientEntity> ingredients = new ArrayList(){{
+        IngredientEntity ing1 = new IngredientEntity("sel", "https://assets.afcdn.com/story/20190408/1341791_w944h530c1cx2880cy1920.webp", null);
+        add(ing1);
+        IngredientEntity ing2 = new IngredientEntity("poivre", null, null);
+        add(ing2);
+        IngredientEntity ing3 = new IngredientEntity("coriandre", null, null);
+        add(ing3);
+    }};
+
+    private static List<RecipeIngredientEntity> ris = new ArrayList(){{
+        RecipeIngredientEntity ri1 = new RecipeIngredientEntity(10.0, "gr", ingredients.get(0), recipes.get(0));
+        add(ri1);
+        RecipeIngredientEntity ri2 = new RecipeIngredientEntity(20.0, "gr", ingredients.get(1), recipes.get(1));
+        add(ri2);
+        RecipeIngredientEntity ri3 = new RecipeIngredientEntity(30.0, "gr", ingredients.get(2), recipes.get(2));
+        add(ri3);
+    }};
+
+
+
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        users.forEach(userEntity -> {
+            try
+            {
+                // Create MessageDigest instance for MD5
+                MessageDigest md = MessageDigest.getInstance("MD5");
+
+                // Add password bytes to digest
+                md.update(userEntity.getPassword().getBytes());
+
+                // Get the hash's bytes
+                byte[] bytes = md.digest();
+
+                // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytes.length; i++) {
+                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+                // Get complete hashed password in hex format
+                userEntity.setPassword(sb.toString());
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        });
         users.forEach(userEntity -> DaoFactory.getUserDAO().create(userEntity));
 
-        recipes.forEach(recipe -> DaoFactory.getRecipeDAO().create(recipe)
-        );
+        recipes.forEach(recipe -> DaoFactory.getRecipeDAO().create(recipe));
+
+        ingredients.forEach(i-> DaoFactory.getIngredientDAO().create(i));
+
+        ris.forEach(ri -> DaoFactory.getRecipeIngredientDAO().create(ri));
     }
 }
