@@ -23,7 +23,7 @@
                 </c:if>
                 <c:if test="${!condition}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/recipe/create?author=${sessionScope.user}">Ajouter une recette</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/recipe/Create">Ajouter une recette</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/reciperand">Recette al&eacute;atoire</a>

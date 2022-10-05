@@ -13,19 +13,34 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet("/recipe/create")
+@WebServlet({"/recipe/Create","/recipe/Update"})
 public class CreateUpdateRecipeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<StepEntity> steps = DaoFactory.getStepDAO().findAll();
-        List<IngredientEntity> ingredients = DaoFactory.getIngredientDAO().findAll();
+        if (req.getParameter("id") == null){
+            req.setAttribute("user", null);
+            req.setAttribute("typeC", "Create");
+            req.getRequestDispatcher("/WEB-INF/createUpdateRecipeForm.jsp").forward(req,resp);
+        }else{
+            String idStr = req.getParameter("id");
+            Optional<RecipeEntity> recipe = DaoFactory.getRecipeDAO().findById(Integer.parseInt(idStr));
+            if (recipe.isPresent()) {
+                req.setAttribute("recipe", recipe.get());
+                req.setAttribute("typeC", "Update");
+                req.getRequestDispatcher("/WEB-INF/createUpdateRecipeForm.jsp").forward(req,resp);
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/homepage");
+            }
+        }
 
-        req.setAttribute("authorId", req.getParameter("author"));
-        req.setAttribute("steps", steps);
-        req.setAttribute("ingredients", ingredients);
-        req.getRequestDispatcher("/WEB-INF/createUpdateRecipeForm.jsp").forward(req, resp);
+//        List<StepEntity> steps = DaoFactory.getStepDAO().findAll();
+//        List<IngredientEntity> ingredients = DaoFactory.getIngredientDAO().findAll();
+//
+//        req.setAttribute("steps", steps);
+//        req.setAttribute("ingredients", ingredients);
+//        req.getRequestDispatcher("/WEB-INF/createUpdateRecipeForm.jsp").forward(req, resp);
     }
 
     @Override
@@ -36,16 +51,33 @@ public class CreateUpdateRecipeServlet extends HttpServlet {
         String photoUrl = req.getParameter("photoUrl");
         String dificulty = req.getParameter("dificulty");
         String price = req.getParameter("price");
-        int prepTime = Integer.parseInt(req.getParameter("prepTime"));
-        int restTime = Integer.parseInt(req.getParameter("restTime"));
-        int cookTime = Integer.parseInt(req.getParameter("cookTime"));
+        String typeC = req.getParameter("typeC");
+        int prepTime;
+        int restTime;
+        int cookTime;
+        if (req.getParameter("prepTime").equals("")){
+            prepTime = 0 ;
+        }else{
+            prepTime = Integer.parseInt(req.getParameter("prepTime"));
+        }
+        if (req.getParameter("restTime").equals("")){
+            restTime = 0 ;
+        }else{
+            restTime = Integer.parseInt(req.getParameter("restTime"));
+        }
+        if (req.getParameter("cookTime").equals("")){
+            cookTime = 0 ;
+        }else{
+            cookTime = Integer.parseInt(req.getParameter("cookTime"));
+        }
+
         String[] ingredient = req.getParameterValues("ingredient");
         String step = req.getParameter("step");
-        String authorId = req.getParameter("author");
+        String idStr = req.getSession().getAttribute("user").toString();
 
         UserEntity authorFound = null;
         try {
-            Optional<UserEntity> author = DaoFactory.getUserDAO().findById(Integer.parseInt(authorId));
+            Optional<UserEntity> author = DaoFactory.getUserDAO().findById(Integer.parseInt(idStr));
 
             if (author.isPresent()){
                 authorFound = author.get();
@@ -53,37 +85,48 @@ public class CreateUpdateRecipeServlet extends HttpServlet {
         }catch(Exception ex){
             ex.printStackTrace();
         }
-
-        try {
+        if (typeC.equals("Update")){
+            int id = Integer.parseInt(req.getParameter("id"));
+            RecipeEntity oldrecipe = DaoFactory.getRecipeDAO().findById(id).get();
+            RecipeEntity newRecipe = new RecipeEntity(id, name, type, description, photoUrl, dificulty, price, prepTime, restTime, cookTime, oldrecipe.getCommentsById(), oldrecipe.getCookedRecipesById(), authorFound, oldrecipe.getRecipeIngredientsById(), oldrecipe.getStepsById());
+            DaoFactory.getRecipeDAO().edit(newRecipe);
+            resp.sendRedirect(req.getContextPath() + "/recipe?id=" + id);
+        }else {
             RecipeEntity newRecipe = new RecipeEntity(name, type, description, photoUrl, dificulty, price, prepTime, restTime, cookTime, null, null, authorFound, null, null);
             DaoFactory.getRecipeDAO().create(newRecipe);
-
-            Collection<IngredientEntity> ingredients = null;
-            for (String item: ingredient){
-                try {
-                    Optional<IngredientEntity> ingredientToFound = DaoFactory.getIngredientDAO().findById(Integer.parseInt(item));
-                    if (ingredientToFound.isPresent()){
-                        ingredients.add(ingredientToFound.get());
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            };
-
-            ingredients.forEach( i -> {
-                RecipeIngredientEntity ri = new RecipeIngredientEntity(Double.parseDouble(req.getParameter(i.getName() + "Qte")), req.getParameter(i.getName()+"Unit"), i, newRecipe);
-                DaoFactory.getRecipeIngredientDAO().create(ri);
-            });
-
-        }catch (Exception e){
-            e.printStackTrace();
+            resp.sendRedirect(req.getContextPath() + "/recipe?id=" + newRecipe.getId());
         }
 
 
+//        try {
+//
+//
+//            Collection<IngredientEntity> ingredients = null;
+//            for (String item: ingredient){
+//                try {
+//                    Optional<IngredientEntity> ingredientToFound = DaoFactory.getIngredientDAO().findById(Integer.parseInt(item));
+//                    if (ingredientToFound.isPresent()){
+//                        ingredients.add(ingredientToFound.get());
+//                    }
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//            };
+//
+//            ingredients.forEach( i -> {
+//                RecipeIngredientEntity ri = new RecipeIngredientEntity(Double.parseDouble(req.getParameter(i.getName() + "Qte")), req.getParameter(i.getName()+"Unit"), i, newRecipe);
+//                DaoFactory.getRecipeIngredientDAO().create(ri);
+//            });
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
 
 
 
-        System.out.println("toto");
+
+
+//        System.out.println("toto");
 
     }
 }

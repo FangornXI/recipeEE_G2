@@ -13,11 +13,16 @@
             <p class="card-text">${recipe.description}</p>
         </div>
 
-        <c:if test = "${sessionScope.user != null}" var="condition">
+        <c:if test = "${sessionScope.user != null}">
             <form action="${pageContext.request.contextPath}/recipe" method="post">
                 <input hidden name="id" value="${recipe.id}">
                 <button type="submit" class="btn btn-lg btn-primary btn-block m-3">Recette cuisinee aujourd'hui</button>
             </form>
+        </c:if>
+
+        <c:if test = "${sessionScope.user == authorid}">
+            <a href="${pageContext.request.contextPath}/recipe/Update?id=${recipe.id}" class="btn btn-primary">Edit</a>
+            <a href="${pageContext.request.contextPath}/recipe?id=${recipe.id}" class="btn btn-primary">Edit ingredient + step</a>
         </c:if>
 
         <div class="row">

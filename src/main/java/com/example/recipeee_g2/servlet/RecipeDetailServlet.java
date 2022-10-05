@@ -27,7 +27,7 @@ public class RecipeDetailServlet extends HttpServlet {
 
             req.setAttribute("recipe",foundRecipe.get());
             req.setAttribute("recipeIngredients",foundRecipe.get().getRecipeIngredientsById());
-//            req.setAttribute("comments",foundRecipe.get().getCommentsById());
+            req.setAttribute("authorid",foundRecipe.get().getUserByAuthorId().getId());
             req.setAttribute("steps",foundRecipe.get().getStepsById());
             //req.setAttribute("cookedRecipes",foundRecipe.get().getCookedRecipesById());
 

@@ -39,11 +39,11 @@ public class RecipeEntity {
     @Basic
     @Column(name = "cook_time")
     private int cookTime;
-    @OneToMany(mappedBy = "recipeByRecipeId")
+    @OneToMany(mappedBy = "recipeByRecipeId", fetch = FetchType.EAGER)
     private Collection<CommentEntity> commentsById;
-    @OneToMany(mappedBy = "recipeByRecipeId")
+    @OneToMany(mappedBy = "recipeByRecipeId", fetch = FetchType.EAGER)
     private Collection<CookedRecipeEntity> cookedRecipesById;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private UserEntity userByAuthorId;
     @OneToMany(mappedBy = "recipeByRecipeId", fetch = FetchType.EAGER)
