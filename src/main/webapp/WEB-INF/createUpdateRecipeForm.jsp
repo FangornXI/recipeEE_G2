@@ -5,7 +5,7 @@
     <jsp:include page="_navbar.jsp"/>
 </header>
 
-<div class="container">
+<div class="container col-9">
 
     <h1>Recette</h1>
 
@@ -101,7 +101,7 @@
 <%--        </select>--%>
 
 
-        <button type="submit" class="btn btn-success">Valider</button>
+        <button type="submit" class="btn btn-success my-3">Valider</button>
 <%--        <script>--%>
 <%--            function addIng(e) {--%>
 <%--                e.preventDefault();--%>
