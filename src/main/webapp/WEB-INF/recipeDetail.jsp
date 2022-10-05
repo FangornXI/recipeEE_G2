@@ -5,15 +5,25 @@
     <jsp:include page="_navbar.jsp"/>
 </header>
 
-<input hidden name="idRecipe" value="${recipe.id}">
-
-<div class="container" style="align-content: center;max-width: 40%; padding: 30px;">
+<div class="container" style="max-width: 40%; padding: 30px;">
     <div class="card">
         <img class="card-img-top " src="${recipe.photoUrl}" alt="${recipe.name}">
         <div class="card-body text-center">
             <h5 class="card-title">${recipe.name}</h5>
             <p class="card-text">${recipe.description}</p>
         </div>
+
+        <c:if test = "${sessionScope.user != null}">
+            <form action="${pageContext.request.contextPath}/recipe" method="post">
+                <input hidden name="id" value="${recipe.id}">
+                <button type="submit" class="btn btn-lg btn-primary btn-block m-3">Recette cuisinee aujourd'hui</button>
+            </form>
+        </c:if>
+
+        <c:if test = "${sessionScope.user == authorid}">
+            <a href="${pageContext.request.contextPath}/recipe/Update?id=${recipe.id}" class="btn btn-primary">Edit</a>
+            <a href="${pageContext.request.contextPath}/StepIngredient/Update?id=${recipe.id}" class="btn btn-primary">Edit ingredient + step</a>
+        </c:if>
 
         <div class="row">
             <div class="col-lg-4 mb-1">
@@ -55,16 +65,16 @@
             </c:forEach>
         </div>
 
-        <div class="card-body mb-3">
-            <c:forEach items="${comments}" var="comment">
-                <p>commentaire laissé par <a href="#">${comment.userByUserId.firstname}</a></p>
-                <p><strong>Note ${comment.rating}/5</strong></p>
-                <p> </p>
-                <div class="container mb-3">
-                    <p>${comment.textComment}</p>
-                </div>
-            </c:forEach>
-        </div>
+      <%-- <c:forEach items="${comments}" var="comment">
+           <div class="card-body mb-3">
+               <p>commentaire laissé par <a href="#">${comment.userByUserId.firstname}</a></p>
+                   <p><strong>Note ${comment.rating}/5</strong></p>
+                   <p> </p>
+                   <div class="container mb-3">
+                       <p>${comment.textComment}</p>
+                   </div>
+           </div>
+       </c:forEach> --%>
     </div>
 </div>
 
