@@ -8,22 +8,29 @@
 <div class="container text-center">
 
     <h1>Login</h1>
+    <div>
+        <form action="${pageContext.request.contextPath}/login" method="post">
 
-    <form action="${pageContext.request.contextPath}/login" method="post">
-
-        <div class="form-label-group mb-3">
-            <input id="email" type="email" name="emailAddress" placeholder="E-mail address" class="form-control" required>
-        </div>
+            <div class="form-label-group mb-3">
+                <input id="email" type="email" name="emailAddress" placeholder="E-mail address" class="form-control" required>
+            </div>
 
 
-        <div class="form-label-group mb-3">
-            <input id="password" type="password" name="password" placeholder="password" class="form-control" required>
-        </div>
+            <div class="form-label-group mb-3">
+                <input id="password" type="password" name="password" placeholder="password" class="form-control" required>
+            </div>
 
-        <button type="submit" class="btn btn-lg btn-primary btn-block m-3">Login</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block m-3">Login</button>
 
-    </form>
-
+        </form>
+    </div>
+    <div class="col-md-8 col-md-offset-2 mt-20">
+        <c:if test="${message!=null}">
+                <div id="msg" class="form-message error text-center white-text">
+                    <p>${message}</p>
+                </div>
+        </c:if>
+    </div>
 </div>
 
 </body>
