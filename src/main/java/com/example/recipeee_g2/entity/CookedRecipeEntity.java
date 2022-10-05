@@ -17,7 +17,7 @@ public class CookedRecipeEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userByUserId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", nullable = false)
     private RecipeEntity recipeByRecipeId;
 

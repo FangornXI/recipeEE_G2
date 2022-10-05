@@ -30,7 +30,7 @@ public class UserEntity {
     private Collection<CommentEntity> commentsById;
     @OneToMany(mappedBy = "userByUserId", fetch = FetchType.EAGER)
     private Collection<CookedRecipeEntity> cookedRecipesById;
-    @OneToMany(mappedBy = "userByAuthorId")
+    @OneToMany(mappedBy = "userByAuthorId", fetch = FetchType.EAGER)
     private Collection<RecipeEntity> recipesById;
 
 

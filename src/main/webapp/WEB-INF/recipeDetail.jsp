@@ -5,7 +5,9 @@
     <jsp:include page="_navbar.jsp"/>
 </header>
 
-<div class="container" style="max-width: 40%; padding: 30px;">
+
+<div class="container" style="align-content: center;max-width: 40%; padding: 30px;">
+
     <div class="card">
         <img class="card-img-top " src="${recipe.photoUrl}" alt="${recipe.name}">
         <div class="card-body text-center">
@@ -65,16 +67,7 @@
             </c:forEach>
         </div>
 
-      <%-- <c:forEach items="${comments}" var="comment">
-           <div class="card-body mb-3">
-               <p>commentaire laissé par <a href="#">${comment.userByUserId.firstname}</a></p>
-                   <p><strong>Note ${comment.rating}/5</strong></p>
-                   <p> </p>
-                   <div class="container mb-3">
-                       <p>${comment.textComment}</p>
-                   </div>
-           </div>
-       </c:forEach> --%>
+
     </div>
 </div>
 
