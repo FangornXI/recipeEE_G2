@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
             req.setAttribute("message", "Unknown password, please try again");
             req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
         }
-        System.out.println(listUser);
+//        System.out.println(listUser);
 
     }
 }
