@@ -22,7 +22,7 @@
 
         <c:if test = "${sessionScope.user == authorid}">
             <a href="${pageContext.request.contextPath}/recipe/Update?id=${recipe.id}" class="btn btn-primary">Edit</a>
-            <a href="${pageContext.request.contextPath}/recipe?id=${recipe.id}" class="btn btn-primary">Edit ingredient + step</a>
+            <a href="${pageContext.request.contextPath}/StepIngredient/Update?id=${recipe.id}" class="btn btn-primary">Edit ingredient + step</a>
         </c:if>
 
         <div class="row">
