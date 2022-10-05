@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.*;
-
+import java.util.stream.Collectors;
 
 
 @WebServlet("/reciperand")
@@ -31,10 +31,13 @@ public class RandomRecipeServlet extends HttpServlet {
         Collection<CookedRecipeEntity> cookedRecipes = user.getCookedRecipesById();
         for (CookedRecipeEntity cr : cookedRecipes){
             if (cr.getDate().after(dateJ)){
-                recipes.remove(cr.getRecipeByRecipeId());
+                recipes = recipes.stream().filter(recipe -> recipe.getId() != cr.getRecipeByRecipeId().getId()).collect(Collectors.toList());
             }
         }
+        Random random = new Random();
+        int nb;
+        nb = random.nextInt(recipes.size());
 
-
+        resp.sendRedirect(req.getContextPath() + "/recipe?id=" + recipes.get(nb).getId());
     }
 }
