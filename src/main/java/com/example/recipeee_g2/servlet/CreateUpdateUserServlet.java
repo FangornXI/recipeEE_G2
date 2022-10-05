@@ -77,8 +77,9 @@ public class CreateUpdateUserServlet extends HttpServlet {
 
         if (type.equals("Update")){
             int id = Integer.parseInt(req.getSession().getAttribute("user").toString());
-            if (password.equals("")) {
-                generatedPassword =  DaoFactory.getUserDAO().findById(id).get().getPassword();
+            String PassByID = DaoFactory.getUserDAO().findById(id).get().getPassword();
+            if (password.equals("") || password.equals(PassByID)) {
+                generatedPassword =  PassByID;
             }
             DaoFactory.getUserDAO().edit(new UserEntity(id, lastname, firstName, emailAddress, photoUrl, generatedPassword, null, null,null));
         }else{

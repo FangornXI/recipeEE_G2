@@ -29,9 +29,9 @@
 
 
         <div class="form-label-group mb-3">
-            <input id="password" type="password" name="password" class="form-control"
+            <input id="password" type="password" name="password" class="form-control" autocomplete="new-password" placeholder="password" value="${user.password}"
             <c:if test = "${sessionScope.user == null}" var="condition">
-                   placeholder="password" required
+                    required
             </c:if>
             >
         </div>
