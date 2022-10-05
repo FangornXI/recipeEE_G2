@@ -25,7 +25,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-<<<<<<< HEAD
         String email = req.getParameter("emailAddress");
         String password = req.getParameter("password");
         String generatedPassword = null;
@@ -62,19 +61,6 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/login");
         }
         System.out.println(listUser);
-=======
-     //   String email = req.getParameter("emailAddress");
-     //   String password = req.getParameter("password");
-//
-     //   String foundPassword = DaoFactory.getUserDAO().findPasswordByEmail(email);
-//
-     //   if (foundPassword != password){
-     //       resp.sendRedirect(req.getContextPath() + "/login");
-     //   }else{
-     //
-     //   }
 
-        resp.sendRedirect(req.getContextPath() + "/homepage");
->>>>>>> feature_addUser
     }
 }
