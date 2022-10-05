@@ -20,12 +20,16 @@ public class JpaIngredientDAO implements ObjectDAO<IngredientEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
+
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             CriteriaQuery<IngredientEntity> query = builder.createQuery(IngredientEntity.class);
             Root<IngredientEntity> i = query.from(IngredientEntity.class);
             query.select(i);
             query.where(builder.lessThanOrEqualTo(i.get(paramName).as(String.class), param));
-            objectList = em.createQuery(query).getResultList();;
+            objectList = em.createQuery(query).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -39,8 +43,12 @@ public class JpaIngredientDAO implements ObjectDAO<IngredientEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
 
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+
         try{
             objectList = em.createQuery("select c from IngredientEntity c", IngredientEntity.class).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -72,8 +80,12 @@ public class JpaIngredientDAO implements ObjectDAO<IngredientEntity> {
     @Override
     public Optional<IngredientEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
+
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             IngredientEntity object = em.find(IngredientEntity.class,idParam);
+            et.commit();
             return Optional.of(object);
         } catch (Exception e) {
             e.printStackTrace();

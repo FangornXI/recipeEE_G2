@@ -1,8 +1,6 @@
 package com.example.recipeee_g2.dao;
 
 import com.example.recipeee_g2.entity.CookedRecipeEntity;
-import com.example.recipeee_g2.entity.IngredientEntity;
-import com.example.recipeee_g2.entity.StepEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -20,12 +18,16 @@ public class JpaCookedRecipeDAO implements ObjectDAO<CookedRecipeEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
+
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             CriteriaQuery<CookedRecipeEntity> query = builder.createQuery(CookedRecipeEntity.class);
             Root<CookedRecipeEntity> i = query.from(CookedRecipeEntity.class);
             query.select(i);
             query.where(builder.lessThanOrEqualTo(i.get(paramName).as(String.class), param));
-            objectList = em.createQuery(query).getResultList();;
+            objectList = em.createQuery(query).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -39,8 +41,12 @@ public class JpaCookedRecipeDAO implements ObjectDAO<CookedRecipeEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
 
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+
         try{
             objectList = em.createQuery("select c from CookedRecipeEntity c", CookedRecipeEntity.class).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -72,8 +78,12 @@ public class JpaCookedRecipeDAO implements ObjectDAO<CookedRecipeEntity> {
     @Override
     public Optional<CookedRecipeEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
+
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             CookedRecipeEntity object = em.find(CookedRecipeEntity.class,idParam);
+            et.commit();
             return Optional.of(object);
         } catch (Exception e) {
             e.printStackTrace();

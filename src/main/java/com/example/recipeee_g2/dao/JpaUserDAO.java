@@ -17,9 +17,12 @@ public class JpaUserDAO implements ObjectDAO<UserEntity> {
         List<UserEntity> objectList = new ArrayList<>();
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
 
         try{
             objectList = em.createQuery("select c from UserEntity c", UserEntity.class).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -52,8 +55,11 @@ public class JpaUserDAO implements ObjectDAO<UserEntity> {
     @Override
     public Optional<UserEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             UserEntity object = em.find(UserEntity.class,idParam);
+            et.commit();
             return Optional.of(object);
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,12 +74,15 @@ public class JpaUserDAO implements ObjectDAO<UserEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
             Root<UserEntity> i = query.from(UserEntity.class);
             query.select(i);
             query.where(builder.lessThanOrEqualTo(i.get(paramName).as(String.class), param));
             objectList = em.createQuery(query).getResultList();;
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

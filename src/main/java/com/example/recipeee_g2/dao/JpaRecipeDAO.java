@@ -20,12 +20,15 @@ public class JpaRecipeDAO implements ObjectDAO<RecipeEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             CriteriaQuery<RecipeEntity> query = builder.createQuery(RecipeEntity.class);
             Root<RecipeEntity> i = query.from(RecipeEntity.class);
             query.select(i);
             query.where(builder.lessThanOrEqualTo(i.get(paramName).as(String.class), param));
-            objectList = em.createQuery(query).getResultList();;
+            objectList = em.createQuery(query).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -38,9 +41,12 @@ public class JpaRecipeDAO implements ObjectDAO<RecipeEntity> {
         List<RecipeEntity> objectList = new ArrayList<>();
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
 
         try{
             objectList = em.createQuery("select c from RecipeEntity c", RecipeEntity.class).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -72,8 +78,11 @@ public class JpaRecipeDAO implements ObjectDAO<RecipeEntity> {
     @Override
     public Optional<RecipeEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             RecipeEntity object = em.find(RecipeEntity.class,idParam);
+            et.commit();
             return Optional.of(object);
         } catch (Exception e) {
             e.printStackTrace();

@@ -26,11 +26,11 @@ public class UserEntity {
     @Basic
     @Column(name = "password")
     private String password;
-    @OneToMany(mappedBy = "userByUserId",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userByUserId")
     private Collection<CommentEntity> commentsById;
     @OneToMany(mappedBy = "userByUserId", fetch = FetchType.EAGER)
     private Collection<CookedRecipeEntity> cookedRecipesById;
-    @OneToMany(mappedBy = "userByAuthorId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userByAuthorId")
     private Collection<RecipeEntity> recipesById;
 
 

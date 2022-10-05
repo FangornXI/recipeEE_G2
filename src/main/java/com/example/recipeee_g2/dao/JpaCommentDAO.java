@@ -20,12 +20,16 @@ public class JpaCommentDAO implements ObjectDAO<CommentEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
+
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             CriteriaQuery<CommentEntity> query = builder.createQuery(CommentEntity.class);
             Root<CommentEntity> i = query.from(CommentEntity.class);
             query.select(i);
             query.where(builder.lessThanOrEqualTo(i.get(paramName).as(String.class), param));
-            objectList = em.createQuery(query).getResultList();;
+            objectList = em.createQuery(query).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -39,8 +43,11 @@ public class JpaCommentDAO implements ObjectDAO<CommentEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
 
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             objectList = em.createQuery("select c from CommentEntity c", CommentEntity.class).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -72,8 +79,12 @@ public class JpaCommentDAO implements ObjectDAO<CommentEntity> {
     @Override
     public Optional<CommentEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
+
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             CommentEntity object = em.find(CommentEntity.class,idParam);
+            et.commit();
             return Optional.of(object);
         } catch (Exception e) {
             e.printStackTrace();

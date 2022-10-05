@@ -1,7 +1,6 @@
 package com.example.recipeee_g2.dao;
 
 import com.example.recipeee_g2.entity.StepEntity;
-import com.example.recipeee_g2.entity.UserEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -19,12 +18,15 @@ public class JpaStepDAO implements ObjectDAO<StepEntity> {
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             CriteriaQuery<StepEntity> query = builder.createQuery(StepEntity.class);
             Root<StepEntity> i = query.from(StepEntity.class);
             query.select(i);
             query.where(builder.lessThanOrEqualTo(i.get(paramName).as(String.class), param));
             objectList = em.createQuery(query).getResultList();;
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -37,9 +39,12 @@ public class JpaStepDAO implements ObjectDAO<StepEntity> {
         List<StepEntity> objectList = new ArrayList<>();
 
         EntityManager em = EMFManager.getEMF().createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
 
         try{
             objectList = em.createQuery("select c from StepEntity c", StepEntity.class).getResultList();
+            et.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -71,8 +76,11 @@ public class JpaStepDAO implements ObjectDAO<StepEntity> {
     @Override
     public Optional<StepEntity> findById(int idParam) {
         EntityManager em = EMFManager.getEMF().createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try{
             StepEntity object = em.find(StepEntity.class,idParam);
+            et.commit();
             return Optional.of(object);
         } catch (Exception e) {
             e.printStackTrace();
