@@ -59,11 +59,9 @@
 
         <div class="row">
             <c:forEach items="${recipeIngredients}" var="ringredient">
-                <div class="center-text col-lg-3 mb-1">
-                    <div class="container text-center" style="max-width: 50px;">
+                <div class="col-lg-4  mb-1">
                         <img src="${ringredient.ingredientByIngId.photoUrl}" alt="${ringredient.ingredientByIngId.name}" class="card-img-top embed-responsive-item">
-                        <p class="card-title">${ringredient.quantity} ${ringredient.unit}</p>
-                    </div>
+                        <p class="">${ringredient.quantity} ${ringredient.unit}</p>
                 </div>
             </c:forEach>
         </div>
