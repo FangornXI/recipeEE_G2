@@ -4,7 +4,6 @@
 <header>
     <jsp:include page="_navbar.jsp"/>
 </header>
-<c:if test="${recipes} != null">
 
     <div class="container">
         <div class="row justify-content-center">
