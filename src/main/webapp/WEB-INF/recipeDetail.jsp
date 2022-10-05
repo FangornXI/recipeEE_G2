@@ -6,9 +6,9 @@
 </header>
 
 
-<div class="container" style="align-content: center;max-width: 40%; padding: 30px;">
+<div class="container" style="max-width: 40%; padding: 30px;align-content: center">
 
-    <div class="card">
+    <div class="card align-items-center" style="background: #e1c9c6;align-content: center">
         <img class="card-img-top " src="${recipe.photoUrl}" alt="${recipe.name}">
         <div class="card-body text-center">
             <h5 class="card-title">${recipe.name}</h5>
@@ -16,16 +16,25 @@
         </div>
 
         <c:if test = "${sessionScope.user != null}">
-            <form action="${pageContext.request.contextPath}/recipe" method="post">
-                <input hidden name="id" value="${recipe.id}">
-                <button type="submit" class="btn btn-lg btn-primary btn-block m-3">Recette cuisinee aujourd'hui</button>
-            </form>
+            <div class="container"style="align-items: center">
+                <form action="${pageContext.request.contextPath}/recipe" method="post">
+                    <input hidden name="id" value="${recipe.id}">
+                    <button type="submit" class="btn btn-lg btn-primary btn-block m-3">Recette cuisinee aujourd'hui</button>
+                </form>
+            </div>
         </c:if>
 
         <c:if test = "${sessionScope.user == authorid}">
-            <a href="${pageContext.request.contextPath}/recipe/Update?id=${recipe.id}" class="btn btn-primary">Edit</a>
-            <a href="${pageContext.request.contextPath}/StepIngredient/Update?id=${recipe.id}" class="btn btn-primary">Edit ingredient + step</a>
+            <div class="container">
+                <div class="row m-2 align-items-center">
+                    <a href="${pageContext.request.contextPath}/recipe/Update?id=${recipe.id}" class="btn btn-primary" style="max-width: 50%; background-color: #bfe1b1; align-content: center">Edit</a>
+                </div>
+                <div class="row m-2 align-items-center">
+                    <a href="${pageContext.request.contextPath}/StepIngredient/Update?id=${recipe.id}" class="btn btn-primary" style="max-width: 50%; background-color: #bfe1b1 ; align-content: center">Modifier les ingrédients et les étapes</a>
+                </div>
+            </div>
         </c:if>
+
 
         <div class="row">
             <div class="col-lg-4 mb-1">

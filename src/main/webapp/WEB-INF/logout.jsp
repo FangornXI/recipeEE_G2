@@ -14,7 +14,7 @@
                     <form action="${pageContext.request.contextPath}/logout" method="post">
                         <div class="row justify-content-between">
                             <button class=" col-3 btn btn-success btn-login text-uppercase fw-bold" type="submit">YES</button>
-                            <a class="col-3 btn btn-danger btn-login text-uppercase fw-bold"  href="${pageContext.request.contextPath}/listCar" type="submit">NO</a>
+                            <a class="col-3 btn btn-danger btn-login text-uppercase fw-bold"  href="${pageContext.request.contextPath}/homepage" type="submit">NO</a>
                         </div>
                     </form>
                 </div>
