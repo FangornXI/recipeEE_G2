@@ -14,7 +14,7 @@ public class CookedRecipeEntity {
     @Basic
     @Column(name = "date")
     private Date date;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userByUserId;
     @ManyToOne

@@ -28,7 +28,7 @@ public class UserEntity {
     private String password;
     @OneToMany(mappedBy = "userByUserId")
     private Collection<CommentEntity> commentsById;
-    @OneToMany(mappedBy = "userByUserId")
+    @OneToMany(mappedBy = "userByUserId", fetch = FetchType.EAGER)
     private Collection<CookedRecipeEntity> cookedRecipesById;
     @OneToMany(mappedBy = "userByAuthorId")
     private Collection<RecipeEntity> recipesById;
