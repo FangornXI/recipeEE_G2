@@ -18,10 +18,10 @@ public class CommentEntity {
     @Basic
     @Column(name = "note")
     private String note;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userByUserId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", nullable = false)
     private RecipeEntity recipeByRecipeId;
 

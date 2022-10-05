@@ -53,7 +53,10 @@
                     <div class="card-body">
                         <h5 class="card-title">${recipe.name}</h5>
                         <p class="card-text">${recipe.description}</p>
-                        <a href=${pageContext.request.contextPath}/recipe?id=${recipe.id}" class="btn btn-primary">View</a>
+                        
+                        <a href="${pageContext.request.contextPath}/recipe?id=${recipe.id}" class="btn btn-primary">View</a>
+
+
                     </div>
                 </div>
             </c:forEach>

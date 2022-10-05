@@ -17,7 +17,7 @@ public class IngredientEntity {
     @Basic
     @Column(name = "photo_url")
     private String photoUrl;
-    @OneToMany(mappedBy = "ingredientByIngId")
+    @OneToMany(mappedBy = "ingredientByIngId", fetch = FetchType.EAGER)
     private Collection<RecipeIngredientEntity> recipeIngredientsById;
 
     public IngredientEntity(int id, String name, String photoUrl, Collection<RecipeIngredientEntity> recipeIngredientsById) {

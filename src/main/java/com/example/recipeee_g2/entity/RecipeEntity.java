@@ -2,6 +2,7 @@ package com.example.recipeee_g2.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -38,16 +39,16 @@ public class RecipeEntity {
     @Basic
     @Column(name = "cook_time")
     private int cookTime;
-    @OneToMany(mappedBy = "recipeByRecipeId")
+    @OneToMany(mappedBy = "recipeByRecipeId", fetch = FetchType.EAGER)
     private Collection<CommentEntity> commentsById;
-    @OneToMany(mappedBy = "recipeByRecipeId")
+    @OneToMany(mappedBy = "recipeByRecipeId", fetch = FetchType.EAGER)
     private Collection<CookedRecipeEntity> cookedRecipesById;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private UserEntity userByAuthorId;
-    @OneToMany(mappedBy = "recipeByRecipeId")
+    @OneToMany(mappedBy = "recipeByRecipeId", fetch = FetchType.EAGER)
     private Collection<RecipeIngredientEntity> recipeIngredientsById;
-    @OneToMany(mappedBy = "recipeByRecipeId")
+    @OneToMany(mappedBy = "recipeByRecipeId", fetch = FetchType.EAGER)
     private Collection<StepEntity> stepsById;
 
     public RecipeEntity(int id, String name, String type, String description, String photoUrl, String dificulty, String price, int prepTime, int restTime, int cookTime, Collection<CommentEntity> commentsById, Collection<CookedRecipeEntity> cookedRecipesById, UserEntity userByAuthorId, Collection<RecipeIngredientEntity> recipeIngredientsById, Collection<StepEntity> stepsById) {
