@@ -15,10 +15,10 @@ public class RecipeIngredientEntity {
     @Basic
     @Column(name = "unit")
     private String unit;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ing_id", referencedColumnName = "id", nullable = false)
     private IngredientEntity ingredientByIngId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", nullable = false)
     private RecipeEntity recipeByRecipeId;
 

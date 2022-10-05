@@ -15,7 +15,7 @@ public class StepEntity {
     @Basic
     @Column(name = "text")
     private String text;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", nullable = false)
     private RecipeEntity recipeByRecipeId;
 

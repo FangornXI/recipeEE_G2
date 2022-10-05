@@ -17,7 +17,7 @@ public class RecipeDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        int id = Integer.parseInt(req.getParameter("idRecipe"));
+        int id = Integer.parseInt(req.getParameter("id"));
 
         Optional<RecipeEntity> foundRecipe = DaoFactory.getRecipeDAO().findById(id);
 
